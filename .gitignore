@@ -1,0 +1,39 @@
+# Environment variables
+.env
+
+# Google Cloud Credentials
+.google/
+*.json
+
+# Data files
+data/
+*.csv
+*.parquet
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Airflow
+logs/
+airflow.cfg
+airflow.db
+webserver_config.py
+
+# macOS
+.DS_Store
+logs/
+.DS_Store
+__pycache__/
+*.pyc
+.env
+.google/
+*.json
+data/
+*.csv
+*.parquet
