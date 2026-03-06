@@ -1,6 +1,14 @@
+from pyspark.sql import SparkSession     # write the cluster details here
+from pyspark.sql.functions import (
+    col,
+    regexp_replace,
+    trim,
+    to_timestamp,
+    trunc,
+    coalesce,
+    when, split, current_timestamp, date_format, to_date, trunc, substring
+)
 import sys
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, when, split, current_timestamp, date_format, to_date, trunc, substring, to_timestamp
 from pyspark.sql.types import StringType
 
 def main(gcs_input_path, gcs_output_path):
@@ -29,10 +37,10 @@ def main(gcs_input_path, gcs_output_path):
     # saledate format example: 'Tue Dec 16 2014 12:30:00 GMT-0800 (PST)'
     
     # Extract the first 24 chars only if it's not "NA", else set NULL
-    clean_dt_str = when(col("saledate") != "NA", substring(col("saledate"), 1, 24)).otherwise(None)
+    clean_dt_str = when(col("saledate") != "NA", substring(trim(col("saledate")), 5, 20)).otherwise(None)
     
     # Parse the timestamp (will silently evaluate to NULL if clean_dt_str is NULL)
-    parsed_timestamp = to_timestamp(clean_dt_str, "EEE MMM dd yyyy HH:mm:ss")
+    parsed_timestamp = to_timestamp(clean_dt_str, "MMM dd yyyy HH:mm:ss")
 
     transformed_df = clean_df \
         .withColumn("sale_date", to_date(parsed_timestamp)) \
@@ -46,6 +54,7 @@ def main(gcs_input_path, gcs_output_path):
     print("Transformation Complete. Sample Data:")
     final_df.show(5, truncate=False)
 
+     
     # 3. WRITE TRANSFORMED DATA TO GCS (PROCESSED FOLDER)
     print(f"Writing processed data to: {gcs_output_path}")
     final_df.write \
@@ -63,3 +72,5 @@ if __name__ == "__main__":
     input_path = sys.argv[1]
     output_path = sys.argv[2]
     main(input_path, output_path)
+
+

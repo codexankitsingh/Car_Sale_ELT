@@ -1,0 +1,24 @@
+
+
+
+Completed:
+->proper naming convention (all smallcase) (done)
+
+-> separate view dataset and separate tableset (done)
+
+->compare the preprocessed data schema and afterProcessing in the documentation.#add the list of views created and thier description view name, discription details.
+
+-> create only one dag and devide it into multiple tasks. also thinnk about possible edge cases :=> 1/2(done only one dag created) and working on the edge cases.... (done)
+
+
+->add all the queries for views (in the documentation) (done)
+
+-> folder structure    (done)
+
+-> why did and why important? (done)
+
+
+
+
+-> check for gcs file exist or not
+-> also update the git repo
